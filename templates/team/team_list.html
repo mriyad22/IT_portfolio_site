@@ -1,0 +1,41 @@
+{% extends 'master/base.html' %}
+{% block title %}
+  Our Team | {{ SITE_NAME }}
+{% endblock %}
+{% block content %}
+  {% include 'partials/page_header.html' with heading='Meet our team' eyebrow='PEOPLE BEHIND THE PROGRESS' subheading='A collaborative team bringing strategy, engineering and care to every project.' %}
+  <section class="section-padding">
+    <div class="container">
+      <div class="row g-4">
+        {% for member in members %}
+          <div class="col-sm-6 col-lg-4">
+            <article class="team-card h-100">
+              {% if member.photo %}
+                <img src="{{ member.photo.url }}" alt="{{ member.name }}" />
+              {% else %}
+                <div class="team-placeholder">
+                  <i class="bi bi-person"></i>
+                </div>
+              {% endif %}
+              <div class="team-card-body">
+                <h3>{{ member.name }}</h3><span>{{ member.role }}</span><p>{{ member.bio|truncatewords:24 }}</p>
+                {% if member.linkedin_url %}
+                  <a href="{{ member.linkedin_url }}" target="_blank" rel="noopener noreferrer" aria-label="{{ member.name }} on LinkedIn"><i class="bi bi-linkedin"></i></a>
+                {% endif %}
+                {% if member.email %}
+                  <a href="mailto:{{ member.email }}" aria-label="Email {{ member.name }}"><i class="bi bi-envelope"></i></a>
+                {% endif %}
+              </div>
+            </article>
+          </div>
+        {% empty %}
+          <div class="col-12">
+            <div class="empty-state">
+              <i class="bi bi-people"></i><h3>Our team page is being prepared</h3><p>Check back soon to meet the people behind our work.</p>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+{% endblock %}

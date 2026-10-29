@@ -1,0 +1,68 @@
+{% extends 'master/base.html' %}
+{% block title %}
+  Contact Us | {{ SITE_NAME }}
+{% endblock %}
+{% block content %}
+  {% include 'partials/page_header.html' with heading="Let's talk" eyebrow='CONTACT OUR TEAM' subheading="Have an idea, a challenge or a question? Tell us about it and we'll be in touch." %}
+  <section class="section-padding">
+    <div class="container">
+      <div class="row g-5">
+        <div class="col-lg-5">
+          <span class="eyebrow">START A CONVERSATION</span><h2 class="section-title">Let's make your next idea <span>happen.</span></h2><p class="body-lead">Share a few details about your project. We'll review your message and get back to you as soon as possible.</p>
+          <div class="contact-info-list">
+            <div>
+              <span class="contact-info-icon"><i class="bi bi-envelope"></i></span><span><small>Email us</small><strong>{{ SITE_EMAIL }}</strong></span>
+            </div>
+            <div>
+              <span class="contact-info-icon"><i class="bi bi-telephone"></i></span><span><small>Call us</small><strong>{{ SITE_PHONE }}</strong></span>
+            </div>
+            <div>
+              <span class="contact-info-icon"><i class="bi bi-geo-alt"></i></span><span><small>Our location</small><strong>{{ SITE_ADDRESS }}</strong></span>
+            </div>
+          </div>
+          <div class="contact-note">
+            <i class="bi bi-shield-check"></i><p>Your information is used only to respond to your enquiry. Please don't include passwords or sensitive personal data.</p>
+          </div>
+        </div>
+
+
+        <div class="col-lg-7">
+          <div class="contact-form-card">
+            <h3>Tell us about your project</h3><p class="text-muted mb-4">Fields marked with * are required.</p>
+            <form method="post" novalidate>
+              {% csrf_token %}{{ form.website }}
+              {% if form.non_field_errors %}
+                <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+              {% endif %}
+              <div class="row g-3">
+                {% for field in form.visible_fields %}
+                  {% if field.name != 'website' %}
+                    <div class="{% if field.name == 'message' %}
+                        col-12
+                      {% elif field.name == 'company' or field.name == 'phone' %}
+                        col-md-6
+                      {% else %}
+                        col-md-6
+                      {% endif %}">
+                      <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %} *{% endif %}</label>{{ field }}{% if field.help_text %}
+                        <div class="form-text">{{ field.help_text }}</div>
+                      {% endif %}
+                      {% for error in field.errors %}
+                        <div class="invalid-feedback d-block">{{ error }}</div>
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+                {% endfor %}
+                <div class="col-12 mt-4">
+                  <button class="btn btn-primary btn-lg rounded-pill px-4" type="submit">Send enquiry <i class="bi bi-arrow-up-right ms-2"></i></button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        
+      </div>
+    </div>
+  </section>
+{% endblock %}

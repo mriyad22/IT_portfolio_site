@@ -1,0 +1,29 @@
+
+{% if messages %}
+  <div class="container messages-wrap">
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show"
+           role="alert">
+        {{ message }}
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Close">
+        </button>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const alerts = document.querySelectorAll(".messages-wrap .alert");
+
+    alerts.forEach(function (alert) {
+      setTimeout(function () {
+        const bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+        bsAlert.close();
+      }, 4000);
+    });
+  });
+</script>

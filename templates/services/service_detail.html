@@ -1,0 +1,33 @@
+{% extends 'master/base.html' %}
+{% block title %}
+  {{ service.title }} | {{ SITE_NAME }}
+{% endblock %}
+{% block content %}
+  {% include 'partials/page_header.html' with heading=service.title eyebrow='OUR SERVICES' subheading=service.short_description %}
+  <section class="section-padding">
+    <div class="container">
+      <div class="row g-5">
+        <div class="col-lg-8">
+          <div class="detail-content">
+            {% if service.image %}
+              <img class="detail-cover" src="{{ service.image.url }}" alt="{{ service.title }}" />
+            {% endif %}<h2>Designed around your business</h2>{{ service.description|linebreaks }}<div class="detail-callout">
+              <i class="bi bi-lightbulb"></i><div>
+                <strong>Let's discuss your requirements</strong><p>We'll help identify the right next steps for your team.</p><a href="{% url 'contact:contact' %}" class="text-link">Start a conversation <i class="bi bi-arrow-up-right"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <aside class="sidebar-card">
+            <h3>How can we help?</h3><p>Tell us what you're trying to achieve and we'll get back to you.</p><a href="{% url 'contact:contact' %}" class="btn btn-primary rounded-pill w-100">Request a consultation</a><hr /><h5>Other services</h5>{% for item in related_services %}
+              <a class="sidebar-link" href="{{ item.get_absolute_url }}">{{ item.title }} <i class="bi bi-arrow-up-right"></i></a>
+            {% empty %}
+              <a class="sidebar-link" href="{% url 'services:list' %}">View all services <i class="bi bi-arrow-right"></i></a>
+            {% endfor %}
+          </aside>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

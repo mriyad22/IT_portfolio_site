@@ -1,0 +1,152 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}
+  Overview
+{% endblock %}
+{% block content %}
+  <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
+    <div>
+      <div class="text-primary fw-semibold small text-uppercase mb-2">Workspace overview</div><h1 class="page-title h2 mb-1">Welcome back, {{ request.user.get_short_name|default:request.user.get_username }}.</h1><p class="muted mb-0">Everything you need to keep your company website up to date.</p>
+    </div><a href="/" class="btn btn-primary px-4"><i class="bi bi-box-arrow-up-right me-2"></i>View live website</a>
+  </div>
+
+  <div class="row g-3 mb-4">
+    <div class="col-6 col-xl-3">
+      <div class="stat-card">
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <div class="muted small mb-2">Services</div>
+            <div class="fs-2 fw-bold">{{ services_count }}</div>
+          </div>
+          <div class="stat-icon">
+            <i class="bi bi-code-slash"></i>
+          </div>
+        </div><a class="small text-decoration-none" href="{% url 'dashboard:content_list' 'services' %}">Manage services <i class="bi bi-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="col-6 col-xl-3">
+      <div class="stat-card">
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <div class="muted small mb-2">Projects</div>
+            <div class="fs-2 fw-bold">{{ projects_count }}</div>
+          </div>
+          <div class="stat-icon">
+            <i class="bi bi-briefcase"></i>
+          </div>
+        </div><a class="small text-decoration-none" href="{% url 'dashboard:content_list' 'projects' %}">Manage projects <i class="bi bi-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="col-6 col-xl-3">
+      <div class="stat-card">
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <div class="muted small mb-2">Blog posts</div>
+            <div class="fs-2 fw-bold">{{ posts_count }}</div>
+          </div>
+          <div class="stat-icon">
+            <i class="bi bi-journal-text"></i>
+          </div>
+        </div><a class="small text-decoration-none" href="{% url 'dashboard:content_list' 'insights' %}">Write an article <i class="bi bi-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="col-6 col-xl-3">
+      <div class="stat-card">
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <div class="muted small mb-2">Unread messages</div>
+            <div class="fs-2 fw-bold">{{ messages_count }}</div>
+          </div>
+          <div class="stat-icon">
+            <i class="bi bi-envelope"></i>
+          </div>
+        </div><a class="small text-decoration-none" href="{% url 'dashboard:contact_messages' %}">Read enquiries <i class="bi bi-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <div>
+      <h2 class="h5 fw-bold mb-1">Manage website content</h2>
+      <p class="muted small mb-0">Create, update, publish or remove content from one place.</p>
+    </div>
+  </div>
+
+  <div class="row g-3 mb-4">
+    {% for module in modules %}
+      <div class="col-md-6 col-xl-4">
+        <div class="module-card">
+          <div class="d-flex justify-content-between align-items-start mb-3">
+            <div class="module-icon">
+              <i class="bi {% if module.key == 'services' %}
+                  bi-code-slash
+                {% elif module.key == 'projects' %}
+                  bi-briefcase
+                {% elif module.key == 'team' %}
+                  bi-people
+                {% elif module.key == 'testimonials' %}
+                  bi-chat-quote
+                {% else %}
+                  bi-journal-text
+                {% endif %}">
+
+              </i>
+            </div><span class="badge rounded-pill text-bg-light">{{ module.count }} items</span>
+          </div><h3 class="h5 fw-bold">{{ module.title }}</h3>
+          <p class="muted small mb-4">{{ module.description }}</p>
+          <div class="d-flex gap-2">
+            <a class="btn btn-primary btn-sm px-3" href="{% url 'dashboard:content_create' module.key %}"><i class="bi bi-plus-lg me-1"></i>Add new</a>
+            <a class="btn btn-outline-secondary btn-sm px-3" href="{{ module.url }}">Manage</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="panel overflow-hidden">
+    <div class="d-flex justify-content-between align-items-center p-3 p-md-4 border-bottom">
+      <div>
+        <h2 class="h5 fw-bold mb-1">Recent contact enquiries</h2><p class="muted small mb-0">Latest messages submitted through the public website.</p>
+      </div><a class="btn btn-outline-primary btn-sm" href="{% url 'dashboard:contact_messages' %}">View all</a>
+    </div>
+    {% if recent_messages %}
+      <div class="table-responsive">
+        <table class="table mb-0">
+          <thead>
+            <tr>
+              <th>Sender</th>
+              <th>Subject</th>
+              <th>Received</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in recent_messages %}
+              <tr>
+                <td>
+                  <div class="fw-semibold">{{ item.name }}</div><small class="muted">{{ item.email }}</small>
+                </td>
+
+                <td>{{ item.subject }}</td>
+                <td class="text-nowrap">{{ item.created_at|date:'M d, Y' }}</td>
+
+                <td>
+                  {% if item.is_read %}
+                    <span class="badge text-bg-light">Read</span>
+                  {% else %}
+                    <span class="badge text-bg-primary">Unread</span>
+                  {% endif %}
+                </td>
+
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="p-4 muted">No contact messages yet.</div>
+    {% endif %}
+  </div>
+{% endblock %}

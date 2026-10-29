@@ -1,0 +1,15 @@
+{% extends 'master/base.html' %}
+{% block title %}
+  Page not found | {{ SITE_NAME }}
+{% endblock %}
+{% block content %}
+  <section class="error-section">
+    <div class="container text-center">
+      <div class="error-code">404</div>
+      <span class="eyebrow">PAGE NOT FOUND</span>
+      <h1>This page seems to have <span>moved on.</span></h1>
+      <p>The page you're looking for may have been moved or no longer exists.</p>
+      <a href="{% url 'core:home' %}" class="btn btn-primary rounded-pill px-4">Back to homepage <i class="bi bi-arrow-up-right ms-2"></i></a>
+    </div>
+  </section>
+{% endblock %}

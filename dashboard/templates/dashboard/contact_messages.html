@@ -1,0 +1,62 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}
+  Contact messages
+{% endblock %}
+{% block content %}
+  <div class="mb-4">
+    <a href="{% url 'dashboard:index' %}" class="small text-decoration-none"><i class="bi bi-arrow-left me-1"></i>Dashboard</a><h1 class="page-title h2 mt-2 mb-1">Contact messages</h1><p class="muted mb-0">Review enquiries submitted through your website.</p>
+  </div>
+  <div class="panel overflow-hidden">
+    <div class="table-responsive">
+      <table class="table mb-0">
+        <thead>
+          <tr>
+            <th>Contact</th>
+            <th>Request</th>
+            <th>Message</th>
+            <th>Date</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in contact_messages %}
+            <tr>
+              <td>
+                <div class="fw-semibold">{{ item.name }}</div>
+                <a class="small" href="mailto:{{ item.email }}">{{ item.email }}</a>
+                {% if item.phone %}
+                  <div class="small muted">{{ item.phone }}</div>
+                {% endif %}
+              </td>
+              
+              <td>
+                <div class="fw-semibold">{{ item.subject }}</div><small class="muted">{{ item.get_service_display }}</small>
+              </td>
+              <td style="min-width:220px;max-width:360px">{{ item.message|truncatechars:180 }}</td>
+              <td class="text-nowrap">
+                <small>{{ item.created_at|date:'M d, Y H:i' }}</small>
+              </td>
+              <td>
+                <form method="post" action="{% url 'dashboard:toggle_message_read' item.pk %}">
+                  {% csrf_token %}
+                  
+                  <button class="btn btn-sm btn-outline-primary text-nowrap" type="submit">
+                    {% if item.is_read %}
+                      read
+                    {% else %}
+                      unread
+                    {% endif %}
+                  </button>
+                </form>
+              </td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="6" class="text-center p-5 muted">No messages received yet.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}

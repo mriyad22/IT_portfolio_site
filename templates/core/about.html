@@ -1,0 +1,74 @@
+{% extends 'master/base.html' %}
+{% block title %}
+  About Us | {{ SITE_NAME }}
+{% endblock %}
+
+{% block content %}
+
+  {% include 'partials/page_header.html' with heading='About us' eyebrow='WHO WE ARE' subheading='A technology partner focused on making business better through thoughtful engineering.' %}
+  <section class="section-padding">
+    <div class="container">
+      <div class="row gy-5 align-items-center">
+        <div class="col-lg-6">
+          <span class="eyebrow">OUR PURPOSE</span><h2 class="section-title">Technology should create <span>possibility.</span></h2><p class="body-lead">We partner with organisations to solve complex problems with clear strategy, dependable software and responsible security practices.</p>
+          <p>Our approach brings business understanding and technical expertise together. We believe the best solutions are practical, accessible and built to evolve as your needs change.</p><a href="{% url 'contact:contact' %}" class="btn btn-primary rounded-pill px-4 mt-3">Work with us <i class="bi bi-arrow-up-right ms-2"></i></a>
+        </div>
+        <div class="col-lg-6">
+          <div class="about-feature-grid">
+            <div class="feature-tile">
+              <i class="bi bi-bullseye"></i><h3>Our mission</h3><p>Make useful technology accessible, secure and valuable to every client we serve.</p>
+            </div>
+            <div class="feature-tile feature-tile-blue">
+              <i class="bi bi-eye"></i><h3>Our vision</h3><p>Help businesses grow with confidence in a world shaped by digital change.</p>
+            </div>
+            <div class="feature-tile feature-tile-light">
+              <i class="bi bi-handshake"></i><h3>Our values</h3><p>Integrity, clarity, curiosity, accountability and lasting partnership.</p>
+            </div>
+            <div class="feature-tile feature-tile-navy">
+              <i class="bi bi-shield-check"></i><h3>Our promise</h3><p>Thoughtful delivery, honest communication and security-conscious decisions.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding bg-soft">
+    <div class="container">
+      <div class="section-heading text-center mx-auto">
+        <span class="eyebrow">HOW WE WORK</span><h2>A clear path from <span>challenge to outcome.</span></h2>
+      </div>
+      <div class="row g-4 mt-3">
+        <div class="col-md-6 col-lg-3">
+          <div class="process-card">
+            <span>01</span><h3>Discover</h3><p>Understand your goals, users, constraints and measures of success.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="process-card">
+            <span>02</span><h3>Plan</h3><p>Agree on a practical roadmap, scope, risks and delivery milestones.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="process-card">
+            <span>03</span><h3>Build</h3><p>Deliver iteratively with quality checks, feedback and secure practices.</p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="process-card">
+            <span>04</span><h3>Improve</h3><p>Measure outcomes, support your team and refine as your needs evolve.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section-padding">
+    <div class="container">
+      <div class="cta-panel">
+        <div>
+          <span class="eyebrow eyebrow-light">READY TO START?</span><h2>Let's make your next move <span>count.</span></h2><p>Bring us your challenge and we'll help map out the next steps.</p>
+        </div><a href="{% url 'contact:contact' %}" class="btn btn-light rounded-pill px-4">Contact us <i class="bi bi-arrow-up-right ms-2"></i></a><div class="cta-circle"></div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

@@ -1,0 +1,112 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}
+  {{ config.title }}
+{% endblock %}
+{% block content %}
+  <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
+    <div>
+      <a href="{% url 'dashboard:index' %}" class="small text-decoration-none"><i class="bi bi-arrow-left me-1"></i>Dashboard</a><h1 class="page-title h2 mt-2 mb-1">{{ config.title }}</h1><p class="muted mb-0">{{ config.description }}</p>
+    </div><a class="btn btn-primary px-3" href="{% url 'dashboard:content_create' content_type %}"><i class="bi bi-plus-lg me-2"></i>Add {{ config.singular }}</a>
+  </div>
+
+  {% comment %} Content Search {% endcomment %}
+  <div class="panel overflow-hidden">
+    <div class="p-3 border-bottom">
+      <form method="get" class="d-flex gap-2">
+        <input class="form-control" type="search" name="q" value="{{ search }}" placeholder="Search {{ config.title|lower }}..." aria-label="Search content" />
+        <button class="btn btn-outline-primary px-3"><i class="bi bi-search me-1"></i>Search</button>
+        {% if search %}
+          <a class="btn btn-light" href="{% url 'dashboard:content_list' content_type %}">Clear</a>
+        {% endif %}
+      </form>
+    </div>
+
+    {% comment %} Content Data {% endcomment %}
+    <div class="table-responsive">
+      <table class="table mb-0">
+        <thead>
+          <tr>
+            <th>Content</th>
+            <th>Status / details</th>
+            <th>Updated / created</th>
+            <th class="text-end">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in objects %}
+            <tr>
+              <td>
+                <div class="fw-semibold">
+                  {% if item.title %}
+                    {{ item.title }}
+                  {% elif item.name %}
+                    {{ item.name }}
+                  {% elif item.client_name %}
+                    {{ item.client_name }}
+                  {% else %}
+                    {{ item }}
+                  {% endif %}
+                </div><small class="muted">
+                  {% if item.slug %}
+                    /{{ content_type }}/{{ item.slug }}
+                  {% elif item.role %}
+                    {{ item.role }}
+                  {% elif item.company %}
+                    {{ item.company }}
+                  {% endif %}
+                </small>
+              </td>
+              <td>
+                {% if content_type == 'insights' or content_type == 'projects' %}
+                  {% if item.is_published %}
+                    <span class="badge text-bg-success">Published</span>
+                  {% else %}
+                    <span class="badge text-bg-secondary">Draft</span>
+                  {% endif %}
+                  {% if item.featured %}
+                    <span class="badge text-bg-primary ms-1">Featured</span>
+                  {% endif %}
+                {% elif content_type == 'services' or content_type == 'team' or content_type == 'testimonials' %}
+                  {% if item.is_active %}
+                    <span class="badge text-bg-success">Active</span>
+                  {% else %}
+                    <span class="badge text-bg-secondary">Inactive</span>
+                  {% endif %}
+                  {% if content_type == 'testimonials' %}
+                    <span class="text-warning ms-1">★ {{ item.rating }}/5</span>
+                  {% endif %}
+                {% else %}
+                  <span class="muted">—</span>
+                {% endif %}
+              </td>
+              <td class="text-nowrap">
+                <small class="muted">
+                  {% if item.updated_at %}
+                    {{ item.updated_at|date:'M d, Y' }}
+                  {% elif item.created_at %}
+                    {{ item.created_at|date:'M d, Y' }}
+                  {% else %}
+                    —
+                  {% endif %}
+                </small>
+              </td>
+              <td>
+                <div class="d-flex justify-content-end gap-2">
+                  <a class="btn btn-sm btn-outline-primary" href="{% url 'dashboard:content_edit' content_type item.pk %}" aria-label="Edit"><i class="bi bi-pencil-square"></i><span class="d-none d-lg-inline ms-1">Edit</span></a>
+                  <a class="btn btn-sm btn-outline-danger" href="{% url 'dashboard:content_delete' content_type item.pk %}" aria-label="Delete"><i class="bi bi-trash"></i></a>
+                </div>
+              </td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="4" class="text-center p-5">
+                <i class="bi bi-inbox fs-2 muted"></i><h3 class="h6 mt-2">No content found</h3><p class="muted small">Create your first {{ config.singular }} to get started.</p><a class="btn btn-primary btn-sm" href="{% url 'dashboard:content_create' content_type %}">Add {{ config.singular }}</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="p-3 border-top small muted">{{ objects|length }} item{{ objects|length|pluralize }} shown</div>
+  </div>
+{% endblock %}

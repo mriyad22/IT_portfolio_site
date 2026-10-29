@@ -1,0 +1,56 @@
+<footer class="site-footer">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-4">
+        <a class="footer-brand" href="{% url 'core:home' %}"><span class="brand-mark"><i class="bi bi-cpu-fill"></i></span> IT Solutions</a>
+        <p class="footer-copy mt-3">We help ambitious organisations turn complex technology challenges into practical, secure and scalable solutions.</p>
+        <div class="social-links">
+          <a href="#" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+          <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+          <a href="https://github.com/mriyad22" aria-label="GitHub"><i class="bi bi-github"></i></a>
+        </div>
+      </div>
+      <div class="col-6 col-lg-2">
+        <h6>Explore</h6><ul class="footer-links">
+          <li>
+            <a href="{% url 'core:about' %}">About us</a>
+          </li>
+          <li>
+            <a href="{% url 'services:list' %}">Our services</a>
+          </li>
+          <li>
+            <a href="{% url 'portfolio:list' %}">Case studies</a>
+          </li>
+          <li>
+            <a href="{% url 'team:list' %}">Our team</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-6 col-lg-2">
+        <h6>Resources</h6><ul class="footer-links">
+          <li>
+            <a href="{% url 'blog:list' %}">Insights</a>
+          </li>
+          <li>
+            <a href="{% url 'contact:contact' %}">Contact</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-lg-4">
+        <h6>Get in touch</h6><p class="footer-contact">
+          <i class="bi bi-geo-alt"></i>{{ SITE_ADDRESS }}
+        </p>
+        <p class="footer-contact">
+          <i class="bi bi-envelope"></i>{{ SITE_EMAIL }}
+        </p>
+        <p class="footer-contact">
+          <i class="bi bi-telephone"></i>{{ SITE_PHONE }}
+        </p>
+        <a class="footer-cta" href="{% url 'contact:contact' %}">Discuss your project <i class="bi bi-arrow-right"></i></a>
+      </div>
+    </div>
+    <div class="footer-bottom d-flex flex-column flex-md-row justify-content-between gap-2">
+      <span>©{% now 'Y' %}IT Solutions International. All rights reserved.</span><span>Built for better business through technology.</span>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,300 @@
+{% extends 'master/base.html' %}
+{% load static %}
+{% block title %}
+  IT Solutions | Technology that moves business forward
+{% endblock %}
+{% block content %}
+  <section class="hero-section">
+    <div class="hero-grid"></div>
+    <div class="container position-relative">
+      <div class="row align-items-center gy-5">
+        <div class="col-lg-7">
+          <span class="eyebrow eyebrow-light"><span class="eyebrow-dot"></span> YOUR PARTNER IN DIGITAL TRANSFORMATION</span>
+          <h1>Technology built for <span>what's next.</span></h1>
+          <p class="hero-lead">We design, develop and secure digital solutions that help businesses work smarter, move faster and grow with confidence.</p>
+          <div class="d-flex flex-wrap gap-3 mt-4">
+            
+            <a href="{% url 'portfolio:list' %}" class="btn btn-light btn-lg rounded-pill px-4">Explore our work <i class="bi bi-arrow-up-right ms-2"></i> </a>
+            <a href="https://wa.me/8801234567890?text=Hello%2C%20I%20need%20your%20IT%20services." class="btn btn-outline-light btn-lg rounded-pill bi bi-whatsapp px-4"> WhatsApp Now</a>
+
+          </div>
+          <div class="hero-trust mt-5">
+            <div class="avatar-stack">
+              <span>IT</span><span>UX</span><span>AI</span>
+            </div>
+            <div>
+              <strong>Technology with purpose</strong><small>People-first. Results-driven. Security-minded.</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="hero-visual">
+            <div class="visual-orbit orbit-one"></div>
+            <div class="visual-orbit orbit-two"></div>
+            <div class="visual-center">
+              <i class="bi bi-cpu"></i><span>Digital core</span>
+            </div>
+            <div class="floating-card card-code">
+              <i class="bi bi-code-slash"></i><span><b>Custom software</b><small>Built around your needs</small></span>
+            </div>
+            <div class="floating-card card-shield">
+              <i class="bi bi-shield-check"></i><span><b>Secure by design</b><small>Protection at every layer</small></span>
+            </div>
+            <div class="floating-card card-cloud">
+              <i class="bi bi-cloud-check"></i><span><b>Ready to scale</b><small>Flexible cloud solutions</small></span>
+            </div>
+            <div class="visual-spark spark-one">✦</div>
+            <div class="visual-spark spark-two">✧</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-bottom-line"></div>
+  </section>
+
+
+
+  <section class="trust-strip">
+    <div class="container">
+      <div class="row align-items-center gy-3">
+        <div class="col-lg-3">
+          <p class="mb-0">
+            A trusted partner for<br /><strong>digital progress</strong>
+          </p>
+        </div>
+        <div class="col-6 col-lg-2 trust-item">
+          <i class="bi bi-lightning-charge"></i> Innovation
+        </div>
+        <div class="col-6 col-lg-2 trust-item">
+          <i class="bi bi-shield-lock"></i> Security
+        </div>
+        <div class="col-6 col-lg-2 trust-item">
+          <i class="bi bi-graph-up-arrow"></i> Growth
+        </div>
+        <div class="col-6 col-lg-3 trust-item">
+          <i class="bi bi-people"></i> Partnership
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="section-padding">
+    <div class="container">
+      <div class="section-heading text-center mx-auto">
+        <span class="eyebrow">WHAT WE DO</span><h2>Technology solutions for <span>real-world challenges.</span></h2><p>From the first idea to long-term support, we bring the right people and technology together to help your business thrive.</p>
+      </div>
+      <div class="row g-4 mt-3">
+        {% for service in services %}
+          <div class="col-md-6 col-lg-4">
+            <article class="service-card h-100">
+              <div class="service-icon">
+                <i class="bi {{ service.icon_class|default:'bi-grid-1x2' }}"></i>
+              </div><h3>{{ service.title }}</h3><p>{{ service.short_description }}</p><a href="{{ service.get_absolute_url }}" class="text-link">Explore service <i class="bi bi-arrow-up-right"></i></a>
+            </article>
+          </div>
+        {% empty %}
+          <div class="col-md-6 col-lg-4">
+            <article class="service-card h-100">
+              <div class="service-icon">
+                <i class="bi bi-code-slash"></i>
+              </div><h3>Web & Software Development</h3><p>Reliable digital products tailored to your workflows, customers and growth goals.</p><a href="{% url 'services:list' %}" class="text-link">Explore service <i class="bi bi-arrow-up-right"></i></a>
+            </article>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <article class="service-card h-100">
+              <div class="service-icon">
+                <i class="bi bi-shield-check"></i>
+              </div><h3>Cybersecurity</h3><p>Practical security assessments and hardening to help protect your digital assets.</p><a href="{% url 'services:list' %}" class="text-link">Explore service <i class="bi bi-arrow-up-right"></i></a>
+            </article>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <article class="service-card h-100">
+              <div class="service-icon">
+                <i class="bi bi-cloud-check"></i>
+              </div><h3>Cloud & IT Consulting</h3><p>Make informed technology decisions and build a resilient foundation for the future.</p><a href="{% url 'services:list' %}" class="text-link">Explore service <i class="bi bi-arrow-up-right"></i></a>
+            </article>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="text-center mt-5">
+        <a href="{% url 'services:list' %}" class="btn btn-outline-primary rounded-pill px-4">View all services <i class="bi bi-arrow-right ms-2"></i></a>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="about-band section-padding">
+    <div class="container">
+      <div class="row align-items-center gy-5">
+        <div class="col-lg-6">
+          <div class="about-art">
+            <div class="about-art-main">
+              <i class="bi bi-diagram-3"></i><span>Connected thinking</span>
+            </div>
+            <div class="about-stat">
+              <strong>360°</strong><span>Technology partnership</span>
+            </div>
+            <div class="about-decoration"></div>
+          </div>
+        </div>
+        <div class="col-lg-6 ps-lg-5">
+          <span class="eyebrow">WHY IT SOLUTIONS</span><h2 class="section-title">More than a vendor.<br /><span>Your technology partner.</span></h2><p class="body-lead">Great technology should make work simpler, create opportunity and earn trust. We combine thoughtful strategy with strong engineering to deliver solutions that last.</p>
+          <div class="check-list">
+            <div>
+              <i class="bi bi-check-circle-fill"></i><span><strong>Business-first thinking</strong><small>We start with your goals, not just the technology.</small></span>
+            </div>
+            <div>
+              <i class="bi bi-check-circle-fill"></i><span><strong>Security built in</strong><small>Responsible engineering and secure practices from day one.</small></span>
+            </div>
+            <div>
+              <i class="bi bi-check-circle-fill"></i><span><strong>Partnership that lasts</strong><small>Clear communication and support beyond launch.</small></span>
+            </div>
+          </div><a href="{% url 'core:about' %}" class="btn btn-primary rounded-pill px-4 mt-4">Discover our approach <i class="bi bi-arrow-up-right ms-2"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="section-padding">
+    <div class="container">
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-3 section-heading-row">
+        <div>
+          <span class="eyebrow">SELECTED WORK</span><h2>Ideas turned into <span>impact.</span></h2><p>Explore a selection of projects that solve meaningful business problems.</p>
+        </div><a href="{% url 'portfolio:list' %}" class="text-link">View all projects <i class="bi bi-arrow-up-right"></i></a>
+      </div>
+      <div class="row g-4 mt-2">
+        {% for project in projects %}
+          <div class="col-md-6 col-lg-4">
+            <article class="project-card h-100">
+              <a href="{{ project.get_absolute_url }}" class="project-image">
+                {% if project.image %}
+                  <img src="{{ project.image.url }}" alt="{{ project.title }}" />
+                {% else %}
+                  <div class="project-placeholder">
+                    <i class="bi bi-window-stack"></i>
+                  </div>
+                {% endif %}<span class="project-arrow"><i class="bi bi-arrow-up-right"></i></span>
+              </a><div class="project-info">
+                <span class="project-category">{{ project.category }}</span><h3><a href="{{ project.get_absolute_url }}">{{ project.title }}</a></h3><p>{{ project.summary }}</p>
+              </div>
+            </article>
+          </div>
+        {% empty %}
+          <div class="col-md-6 col-lg-4">
+            <article class="project-card h-100">
+              <div class="project-image">
+                <div class="project-placeholder placeholder-blue">
+                  <i class="bi bi-window-stack"></i>
+                </div>
+              </div>
+              <div class="project-info">
+                <span class="project-category">WEB DEVELOPMENT</span><h3>Digital Business Platform</h3><p>A streamlined platform designed to improve customer experience and operational efficiency.</p>
+              </div>
+            </article>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <article class="project-card h-100">
+              <div class="project-image">
+                <div class="project-placeholder placeholder-purple">
+                  <i class="bi bi-shield-lock"></i>
+                </div>
+              </div>
+              <div class="project-info">
+                <span class="project-category">CYBERSECURITY</span><h3>Security Improvement Program</h3><p>A practical security roadmap focused on risk reduction and stronger controls.</p>
+              </div>
+            </article>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <article class="project-card h-100">
+              <div class="project-image">
+                <div class="project-placeholder placeholder-cyan">
+                  <i class="bi bi-bar-chart"></i>
+                </div>
+              </div>
+              <div class="project-info">
+                <span class="project-category">SOFTWARE</span><h3>Operations Dashboard</h3><p>A clear, data-informed dashboard that helps teams make better decisions.</p>
+              </div>
+            </article>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-panel">
+        <div>
+          <span class="eyebrow eyebrow-light">LET'S BUILD SOMETHING BETTER</span><h2>Have a challenge in mind?<br /><span>Let's solve it together.</span></h2><p>Tell us where you want to go. We'll help you find a practical way forward.</p>
+        </div><a href="{% url 'contact:contact' %}" class="btn btn-light btn-lg rounded-pill px-4">Talk to our team <i class="bi bi-arrow-up-right ms-2"></i></a><div class="cta-circle"></div>
+      </div>
+    </div>
+  </section>
+
+
+  {% if testimonials %}
+    <section class="section-padding testimonials-section">
+      <div class="container">
+        <div class="section-heading text-center mx-auto">
+          <span class="eyebrow">CLIENT STORIES</span><h2>Good work. <span>Good relationships.</span></h2>
+        </div>
+        <div class="row g-4 mt-3">
+          {% for item in testimonials %}
+            <div class="col-md-6 col-lg-4">
+              <article class="testimonial-card h-100">
+                <div class="quote-mark">“</div>
+                <p>{{ item.quote }}</p>
+                <div class="testimonial-person">
+                  {% if item.photo %}
+                    <img src="{{ item.photo.url }}" alt="{{ item.client_name }}" />
+                  {% else %}
+                    <span class="person-initial">{{ item.client_name|first|upper }}</span>
+                  {% endif %}
+                  <div>
+                    <strong>{{ item.client_name }}</strong><small>
+                      {{ item.role }}{% if item.company %}
+                        , {{ item.company }}
+                      {% endif %}
+                    </small>
+                  </div>
+                </div>
+              </article>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+  {% endif %}
+  
+
+  {% if posts %}
+    <section class="section-padding bg-soft">
+      <div class="container">
+        <div class="section-heading-row d-flex justify-content-between align-items-end">
+          <div>
+            <span class="eyebrow">LATEST INSIGHTS</span><h2>Ideas worth <span>sharing.</span></h2>
+          </div><a href="{% url 'blog:list' %}" class="text-link">Visit insights <i class="bi bi-arrow-up-right"></i></a>
+        </div>
+        <div class="row g-4 mt-2">
+          {% for post in posts %}
+            <div class="col-md-4">
+              <article class="blog-card h-100">
+                {% if post.cover_image %}
+                  <a href="{{ post.get_absolute_url }}" class="blog-image"><img src="{{ post.cover_image.url }}" alt="{{ post.title }}" /></a>
+                {% else %}
+                  <a href="{{ post.get_absolute_url }}" class="blog-image blog-image-placeholder"><i class="bi bi-journal-richtext"></i></a>
+                {% endif %}
+                <div class="blog-body">
+                  <small>{{ post.published_at|date:'M d, Y'|default:post.created_at|date:'M d, Y' }} · {{ post.author_name }}</small><h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3><p>{{ post.excerpt }}</p><a href="{{ post.get_absolute_url }}" class="text-link">Read article <i class="bi bi-arrow-up-right"></i></a>
+                </div>
+              </article>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+  {% endif %}
+{% endblock %}

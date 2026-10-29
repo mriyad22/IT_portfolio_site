@@ -1,0 +1,28 @@
+{% extends 'master/base.html' %}
+{% block title %}
+  Services | {{ SITE_NAME }}
+{% endblock %}
+{% block content %}
+  {% include 'partials/page_header.html' with heading='Our services' eyebrow='WHAT WE DO' subheading='Practical technology expertise to help your organisation move forward.' %}
+  <section class="section-padding">
+    <div class="container">
+      <div class="row g-4">
+        {% for service in services %}
+          <div class="col-md-6 col-lg-4">
+            <article class="service-card h-100">
+              <div class="service-icon">
+                <i class="bi {{ service.icon_class|default:'bi-grid-1x2' }}"></i>
+              </div><h3>{{ service.title }}</h3><p>{{ service.short_description }}</p><a href="{{ service.get_absolute_url }}" class="text-link">Explore service <i class="bi bi-arrow-up-right"></i></a>
+            </article>
+          </div>
+        {% empty %}
+          <div class="col-12">
+            <div class="empty-state">
+              <i class="bi bi-grid"></i><h3>Services are being updated</h3><p>Please contact our team to discuss your requirements.</p><a href="{% url 'contact:contact' %}" class="btn btn-primary rounded-pill">Contact us</a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+{% endblock %}

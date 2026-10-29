@@ -1,0 +1,35 @@
+{% extends 'master/base.html' %}
+{% block title %}
+  Insights | {{ SITE_NAME }}
+{% endblock %}
+{% block content %}
+  {% include 'partials/page_header.html' with heading='Insights & ideas' eyebrow='KNOWLEDGE SHARED' subheading='Perspectives on technology, security and building better digital experiences.' %}
+  <section class="section-padding">
+    <div class="container">
+      <div class="row g-4">
+
+        {% for post in posts %}
+          <div class="col-md-6 col-lg-4">
+            <article class="blog-card h-100">
+              {% if post.cover_image %}
+                <a href="{{ post.get_absolute_url }}" class="blog-image"><img src="{{ post.cover_image.url }}" alt="{{ post.title }}" /></a>
+              {% else %}
+                <a href="{{ post.get_absolute_url }}" class="blog-image blog-image-placeholder"><i class="bi bi-journal-richtext"></i></a>
+              {% endif %}
+              <div class="blog-body">
+                <small>{{ post.published_at|date:'M d, Y'|default:post.created_at|date:'M d, Y' }} · {{ post.author_name }}</small><h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3><p>{{ post.excerpt }}</p><a href="{{ post.get_absolute_url }}" class="text-link">Read article <i class="bi bi-arrow-up-right"></i></a>
+              </div>
+            </article>
+          </div>
+        {% empty %}
+          <div class="col-12">
+            <div class="empty-state">
+              <i class="bi bi-journal-richtext"></i><h3>Fresh insights are on the way</h3><p>Our team is preparing practical articles and updates.</p>
+            </div>
+          </div>
+        {% endfor %}
+
+      </div>
+    </div>
+  </section>
+{% endblock %}
