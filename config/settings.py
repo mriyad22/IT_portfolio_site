@@ -5,11 +5,11 @@ from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent.parent    #--> Locating the project's root directory
 load_dotenv(BASE_DIR / ".env")  #--> Loading configuration from an .env file
 
-SECRET_KEY = os.getenv("SECRET_KEY", "dev-only-change-me-before-deployment")
-DEBUG = True
-# DEBUG = os.getenv("DEBUG", "False").lower() in ("1", "true", "yes")
-# ALLOWED_HOSTS = ['*']
-ALLOWED_HOSTS = [host.strip() for host in os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",") if host.strip()]
+SECRET_KEY = 'django-insecure-)aav*++_1-^^aw=tpt6qm!e8x3na@oq6j!p$-%6wj%l=^30itf'
+
+DEBUG = os.getenv("DEBUG", "False").lower() in ("1", "true", "yes")
+
+ALLOWED_HOSTS = [host.strip() for host in os.getenv("ALLOWED_HOSTS", "it.pybrothers.top").split(",") if host.strip()]
 CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",") if origin.strip()]
 
 INSTALLED_APPS = [
@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    'whitenoise.runserver_nostatic',
     "django.contrib.staticfiles",
 
     #---> App
@@ -32,8 +33,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -93,10 +94,15 @@ AUTH_PASSWORD_VALIDATORS = [
 # Configure WhiteNoise storage for cache-busting hashes and compression (Gzip/Brotli)
 STORAGES = {
     "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
+        "BACKEND": (
+            "django.core.files.storage.FileSystemStorage"
+        ),
     },
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        "BACKEND": (
+            "whitenoise.storage."
+            "CompressedManifestStaticFilesStorage"
+        ),
     },
 }
 
@@ -108,7 +114,6 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = "/static/"
-STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 MEDIA_URL = "/media/"
@@ -122,6 +127,7 @@ X_FRAME_OPTIONS = "DENY"
 SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
 SESSION_COOKIE_HTTPONLY = True
 CSRF_COOKIE_HTTPONLY = True
+
 if not DEBUG:
     SECURE_SSL_REDIRECT = os.getenv("SECURE_SSL_REDIRECT", "False").lower() in ("1", "true", "yes")
     SESSION_COOKIE_SECURE = True

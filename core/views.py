@@ -1,10 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from services.models import ServiceModel
 from portfolio.models import ProjectModel
 from team.models import TestimonialModel
 from blog.models import PostModel
 
 def home(request):
+    if request.user.is_authenticated:
+        return redirect("dashboard:index")
+    
     services = ServiceModel.objects.filter(is_active=True).order_by("order", "title")[:6]
     projects = ProjectModel.objects.filter(is_published=True).order_by("-featured", "-created_at")[:3]
     testimonials = TestimonialModel.objects.filter(is_active=True).order_by("order")[:3]
