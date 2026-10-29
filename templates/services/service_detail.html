@@ -1,33 +1,7 @@
 {% extends 'master/base.html' %}
-{% block title %}
-  {{ service.title }} | {{ SITE_NAME }}
-{% endblock %}
+{% block title %}{{ service.title }} | {{ SITE_NAME }}{% endblock %}
+{% block meta_description %}{{ service.short_description }}{% endblock %}
 {% block content %}
-  {% include 'partials/page_header.html' with heading=service.title eyebrow='OUR SERVICES' subheading=service.short_description %}
-  <section class="section-padding">
-    <div class="container">
-      <div class="row g-5">
-        <div class="col-lg-8">
-          <div class="detail-content">
-            {% if service.image %}
-              <img class="detail-cover" src="{{ service.image.url }}" alt="{{ service.title }}" />
-            {% endif %}<h2>Designed around your business</h2>{{ service.description|linebreaks }}<div class="detail-callout">
-              <i class="bi bi-lightbulb"></i><div>
-                <strong>Let's discuss your requirements</strong><p>We'll help identify the right next steps for your team.</p><a href="{% url 'contact:contact' %}" class="text-link">Start a conversation <i class="bi bi-arrow-up-right"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <aside class="sidebar-card">
-            <h3>How can we help?</h3><p>Tell us what you're trying to achieve and we'll get back to you.</p><a href="{% url 'contact:contact' %}" class="btn btn-primary rounded-pill w-100">Request a consultation</a><hr /><h5>Other services</h5>{% for item in related_services %}
-              <a class="sidebar-link" href="{{ item.get_absolute_url }}">{{ item.title }} <i class="bi bi-arrow-up-right"></i></a>
-            {% empty %}
-              <a class="sidebar-link" href="{% url 'services:list' %}">View all services <i class="bi bi-arrow-right"></i></a>
-            {% endfor %}
-          </aside>
-        </div>
-      </div>
-    </div>
-  </section>
+  <section class="service-detail-hero"><div class="container"><nav class="case-breadcrumb" aria-label="Breadcrumb"><a href="{% url 'core:home' %}">Home</a><i class="bi bi-chevron-right"></i><a href="{% url 'services:list' %}">Services</a><i class="bi bi-chevron-right"></i><span>{{ service.title }}</span></nav><div class="service-detail-hero-grid"><div><span class="section-kicker"><i class="bi bi-stars"></i> WHAT WE DO</span><h1>{{ service.title }}</h1><p class="case-lead">{{ service.short_description }}</p><div class="case-hero-actions"><a href="{% url 'contact:contact' %}" class="btn btn-primary rounded-pill">Discuss your requirements <i class="bi bi-arrow-up-right ms-2"></i></a><a href="{% url 'services:list' %}" class="btn btn-outline-primary rounded-pill">Explore all services</a></div></div><div class="service-detail-icon"><i class="bi {{ service.icon_class|default:'bi-grid-1x2' }}"></i><span>Strategy · Delivery · Support</span></div></div></div></section>
+  <section class="section-padding"><div class="container"><div class="row g-5"><div class="col-lg-8"><article class="detail-content service-detail-content">{% if service.image %}<img class="detail-cover service-detail-cover" src="{{ service.image.url }}" alt="{{ service.title }}" fetchpriority="high" />{% endif %}<span class="section-kicker">A PRACTICAL APPROACH</span><h2>Designed around your business</h2><div>{{ service.description|linebreaks }}</div><div class="service-benefits"><div><i class="bi bi-bullseye"></i><h3>Outcome focused</h3><p>Work aligned with your goals, users and operational needs.</p></div><div><i class="bi bi-shield-check"></i><h3>Built thoughtfully</h3><p>Considered implementation with maintainability and security in mind.</p></div><div><i class="bi bi-chat-dots"></i><h3>Clear communication</h3><p>Practical next steps and collaboration throughout delivery.</p></div></div><div class="case-next-step"><div class="case-next-icon"><i class="bi bi-lightbulb"></i></div><div><span class="section-kicker">LET’S PLAN YOUR NEXT STEP</span><h3>Have a challenge we can help solve?</h3><p>Share a little about your goals and we’ll help you explore the right approach.</p><a href="{% url 'contact:contact' %}" class="project-read-more">Start a conversation <i class="bi bi-arrow-up-right"></i></a></div></div></article></div><div class="col-lg-4"><aside class="case-sidebar service-sidebar"><div class="case-sidebar-heading"><span class="section-kicker">LET’S WORK TOGETHER</span><h2>How can we help?</h2><p>Tell us what you’re trying to achieve and we’ll get back to you.</p></div><a href="{% url 'contact:contact' %}" class="btn btn-primary rounded-pill w-100">Request a consultation <i class="bi bi-arrow-up-right ms-1"></i></a><div class="service-sidebar-links"><h3>Explore other services</h3>{% for item in related_services %}<a class="sidebar-link" href="{{ item.get_absolute_url }}"><span>{{ item.title }}</span><i class="bi bi-arrow-up-right"></i></a>{% empty %}<a class="sidebar-link" href="{% url 'services:list' %}"><span>View all services</span><i class="bi bi-arrow-right"></i></a>{% endfor %}</div></aside></div></div></div></section>
 {% endblock %}

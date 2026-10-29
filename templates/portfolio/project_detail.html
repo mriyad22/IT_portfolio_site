@@ -1,61 +1,61 @@
 {% extends 'master/base.html' %}
-{% block title %}
-  {{ project.title }} | {{ SITE_NAME }}
-{% endblock %}
+
+{% block title %}{{ project.title }} | Case Study | {{ SITE_NAME }}{% endblock %}
+{% block meta_description %}{{ project.summary|default:project.title }}{% endblock %}
+
 {% block content %}
-  {% include 'partials/page_header.html' with heading=project.title eyebrow='PROJECT CASE STUDY' subheading=project.summary %}
-  <section class="section-padding">
+  <section class="case-hero">
     <div class="container">
-      <div class="row g-5">
-        <div class="col-lg-8">
-          {% if project.image %}
-            <img class="detail-cover mb-4" src="{{ project.image.url }}" alt="{{ project.title }}" />
-          {% else %}
-            <div class="project-placeholder detail-placeholder mb-4">
-              <i class="bi bi-window-stack"></i>
-            </div>
-          {% endif %}
-          <div class="detail-content">
-            <h2>Project overview</h2>{{ project.description|linebreaks }}{% if project.project_url %}
-              <a href="{{ project.project_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary rounded-pill mt-3">Visit project <i class="bi bi-box-arrow-up-right ms-2"></i></a>
-            {% endif %}
+      <nav class="case-breadcrumb" aria-label="Breadcrumb"><a href="{% url 'core:home' %}">Home</a><i class="bi bi-chevron-right"></i><a href="{% url 'portfolio:list' %}">Projects</a><i class="bi bi-chevron-right"></i><span>{{ project.title }}</span></nav>
+      <div class="case-hero-grid">
+        <div class="case-hero-copy">
+          <span class="section-kicker"><i class="bi bi-journal-check"></i> PROJECT CASE STUDY</span>
+          {% if project.category %}<span class="case-category-pill">{{ project.category.name }}</span>{% endif %}
+          <h1>{{ project.title }}</h1>
+          <p class="case-lead">{{ project.summary }}</p>
+          <div class="case-hero-actions">
+            {% if project.project_url %}<a href="{{ project.project_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary rounded-pill">View live project <i class="bi bi-arrow-up-right ms-2"></i></a>{% endif %}
+            <a href="{% url 'contact:contact' %}" class="btn btn-outline-primary rounded-pill">Build something similar</a>
           </div>
         </div>
-        <div class="col-lg-4">
-          <aside class="sidebar-card">
-            <h3>Project details</h3><p>
-              <strong>Category</strong><br />{{ project.category }}
-            </p>
-            {% if project.client_name %}
-              <p>
-                <strong>Client</strong><br />{{ project.client_name }}
-              </p>
-            {% endif %}
+        <div class="case-hero-art" aria-hidden="true"><div class="case-art-orbit orbit-one"></div><div class="case-art-orbit orbit-two"></div><div class="case-art-card"><i class="bi bi-braces-asterisk"></i><span>IDEA</span><i class="bi bi-arrow-down-right"></i><strong>IMPACT</strong></div><span class="case-art-dot dot-one"></span><span class="case-art-dot dot-two"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding case-study-section">
+    <div class="container">
+      <div class="case-cover-wrap">
+        {% if project.image %}<img class="case-cover" src="{{ project.image.url }}" alt="{{ project.title }} project preview" fetchpriority="high" />{% else %}<div class="project-placeholder case-cover-placeholder"><i class="bi bi-window-stack"></i><span>PROJECT PREVIEW</span></div>{% endif %}
+        <div class="case-cover-caption"><span><i class="bi bi-check2-circle"></i> Selected work</span><span>Case study <i class="bi bi-arrow-down-right"></i></span></div>
+      </div>
+
+      <div class="row g-5 case-content-grid">
+        <div class="col-lg-8">
+          <article class="detail-content case-article">
+            <span class="section-kicker">THE STORY</span>
+            <h2>Project overview</h2>
+            <div class="case-description">{{ project.description|linebreaks }}</div>
             {% if project.technologies %}
-              <p>
-                <strong>Technologies</strong><br />{{ project.technologies }}
-              </p>
+              <div class="case-tech-section"><h3>Technology stack</h3><p class="case-muted">Tools and technologies used to bring this project to life.</p><div class="tech-chip-list">{% for technology in project.technology_list %}<span class="tech-chip"><i class="bi bi-check2"></i>{{ technology }}</span>{% endfor %}</div></div>
             {% endif %}
-            <hr /><a href="{% url 'contact:contact' %}" class="btn btn-primary rounded-pill w-100">Start a similar project</a>
+            <div class="case-next-step"><div class="case-next-icon"><i class="bi bi-lightning-charge"></i></div><div><span class="section-kicker">HAVE A SIMILAR CHALLENGE?</span><h3>Let’s turn your idea into a working solution.</h3><p>Tell us what you want to achieve. We’ll help map out a practical next step.</p><a href="{% url 'contact:contact' %}" class="project-read-more">Start a conversation <i class="bi bi-arrow-up-right"></i></a></div></div>
+          </article>
+        </div>
+        <div class="col-lg-4">
+          <aside class="case-sidebar">
+            <div class="case-sidebar-heading"><span class="section-kicker">AT A GLANCE</span><h2>Project details</h2></div>
+            <div class="case-detail-row"><span><i class="bi bi-grid-1x2"></i> Category</span><strong>{% if project.category %}{{ project.category.name }}{% else %}Digital solution{% endif %}</strong></div>
+            {% if project.client_name %}<div class="case-detail-row"><span><i class="bi bi-building"></i> Client</span><strong>{{ project.client_name }}</strong></div>{% endif %}
+            <div class="case-detail-row"><span><i class="bi bi-calendar3"></i> Added</span><strong>{{ project.created_at|date:'M Y' }}</strong></div>
+            {% if project.technologies %}<div class="case-detail-row"><span><i class="bi bi-code-slash"></i> Stack</span><strong>{{ project.technology_list|length }} technologies</strong></div>{% endif %}
+            {% if project.project_url %}<a href="{{ project.project_url }}" target="_blank" rel="noopener noreferrer" class="case-external-link">Open live project <i class="bi bi-box-arrow-up-right"></i></a>{% endif %}
+            <div class="case-sidebar-cta"><i class="bi bi-chat-square-text"></i><h3>Have a project in mind?</h3><p>Let’s talk about the outcome you need.</p><a href="{% url 'contact:contact' %}" class="btn btn-primary rounded-pill w-100">Talk to our team</a></div>
           </aside>
         </div>
       </div>
 
-      {% if related_projects %}
-        <div class="mt-5">
-          <h3 class="section-title mb-4">Related projects</h3><div class="row g-4">
-            {% for item in related_projects %}
-              <div class="col-md-4">
-                <article class="project-card">
-                  <div class="project-info">
-                    <span class="project-category">{{ item.category }}</span><h3><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></h3><p>{{ item.summary }}</p>
-                  </div>
-                </article>
-              </div>
-            {% endfor %}
-          </div>
-        </div>
-      {% endif %}
+      {% if related_projects %}<section class="related-work-section"><div class="related-heading"><div><span class="section-kicker">KEEP EXPLORING</span><h2 class="section-title">Related projects</h2></div><a href="{% url 'portfolio:list' %}" class="project-read-more">All projects <i class="bi bi-arrow-right"></i></a></div><div class="row g-4">{% for item in related_projects %}<div class="col-md-4"><article class="project-card project-card-premium h-100"><a href="{{ item.get_absolute_url }}" class="project-image">{% if item.image %}<img src="{{ item.image.url }}" alt="{{ item.title }}" loading="lazy" />{% else %}<div class="project-placeholder"><i class="bi bi-window-stack"></i></div>{% endif %}<span class="project-arrow"><i class="bi bi-arrow-up-right"></i></span></a><div class="project-info"><span class="project-category">{{ item.category|default:'Digital solution' }}</span><h3><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></h3><p>{{ item.summary|truncatechars:105 }}</p><a href="{{ item.get_absolute_url }}" class="project-read-more">View case study <i class="bi bi-arrow-right"></i></a></div></article></div>{% endfor %}</div></section>{% endif %}
     </div>
   </section>
 {% endblock %}

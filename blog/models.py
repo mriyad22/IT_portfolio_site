@@ -9,7 +9,7 @@ class PostModel(models.Model):
     slug = models.SlugField(max_length=200, unique=True, blank=True)
     excerpt = models.CharField(max_length=280)
     body = models.TextField()
-    cover_image = models.ImageField(upload_to="media/blog/", blank=True, null=True)
+    cover_image = models.ImageField(upload_to="blog/", blank=True, null=True)
     author_name = models.CharField(max_length=100, default="IT Solutions Team")
     is_published = models.BooleanField(default=False)
     published_at = models.DateTimeField(blank=True, null=True)

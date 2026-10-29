@@ -1,69 +1,59 @@
 {% extends 'master/base.html' %}
 
-{% block title %}Projects | {{ SITE_NAME }}{% endblock %}
+{% block title %}Projects & Case Studies | {{ SITE_NAME }}{% endblock %}
+{% block meta_description %}Explore selected projects, technology solutions and case studies from {{ SITE_NAME }}.{% endblock %}
 
 {% block content %}
-{% include "partials/page_header.html" with heading="Our work" eyebrow="SELECTED PROJECTS" subheading="Thoughtful solutions built to solve real challenges and create measurable value." %}
+  {% include 'partials/page_header.html' with heading='Projects that move ideas forward' eyebrow='SELECTED WORK · REAL-WORLD SOLUTIONS' subheading='A closer look at the digital products, platforms and security-focused solutions we build.' %}
 
-<section class="section-padding">
-  <div class="container">
-    <!-- Filter Bar Component -->
-    <form method="get" class="filter-bar mb-4">
-      <label for="category" class="form-label mb-0">Filter by category</label>
-      <select class="form-select" id="category" name="category" onchange="this.form.submit()">
-        <option value="">All projects</option>
-        {% for category in categories %}
-        <option value="{{ category }}" {% if selected_category == category %}selected{% endif %}>{{ category }}</option>
-        {% endfor %}
-      </select>
-
-      {% if selected_category %}
-      <a href="{% url 'portfolio:list' %}" class="text-link">Clear filter</a>
-      {% endif %}
-    </form>
-
-    <!-- Projects Grid Grid -->
-    <div class="row g-4">
-      {% for project in projects %}
-      <div class="col-md-6 col-lg-4">
-        <article class="project-card h-100">
-          <a href="{{ project.get_absolute_url }}" class="project-image">
-            {% if project.image %}
-            <img src="{{ project.image.url }}" alt="{{ project.title }}" />
-            {% else %}
-            <div class="project-placeholder">
-              <i class="bi bi-window-stack"></i>
-            </div>
-            {% endif %}
-            <span class="project-arrow">
-              <i class="bi bi-arrow-up-right"></i>
-            </span>
-          </a>
-
-          <div class="project-info">
-            <span class="project-category">{{ project.category }}</span>
-            <h3>
-              <a href="{{ project.get_absolute_url }}">{{ project.title }}</a>
-            </h3>
-            <p>{{ project.summary }}</p>
-          </div>
-        </article>
-      </div>
-      {% empty %}
-      <!-- Empty State View -->
-      <div class="col-12">
-        <div class="empty-state">
-          <i class="bi bi-window-stack"></i>
-          <h3>Projects coming soon</h3>
-          <p>
-            We're preparing our portfolio. Get in touch to learn about our
-            capabilities.
-          </p>
-          <a href="{% url 'contact:contact' %}" class="btn btn-primary rounded-pill">Discuss a project</a>
+  <section class="section-padding project-list-section">
+    <div class="container">
+      <div class="portfolio-intro">
+        <div>
+          <span class="section-kicker">OUR PORTFOLIO</span>
+          <h2 class="section-title">Built with purpose.</h2>
+          <p class="section-subtitle">Explore the work by category and open a case study for more detail.</p>
         </div>
+        <div class="portfolio-count"><strong>{{ projects|length }}</strong><span>project{{ projects|length|pluralize }} shown</span></div>
       </div>
-      {% endfor %}
+
+      <form method="get" class="portfolio-filter" aria-label="Filter projects by category">
+        <div class="filter-label"><i class="bi bi-sliders2"></i><label for="category">Explore by category</label></div>
+        <select class="form-select" id="category" name="category" onchange="this.form.submit()">
+          <option value="">All projects</option>
+          {% for item in categories %}
+            <option value="{{ item }}" {% if selected_category == item %}selected{% endif %}>{{ item }}</option>
+          {% endfor %}
+        </select>
+        {% if selected_category %}<a href="{% url 'portfolio:list' %}" class="filter-clear"><i class="bi bi-x-circle"></i> Clear filter</a>{% endif %}
+      </form>
+
+      <div class="row g-4 project-grid">
+        {% for project in projects %}
+          <div class="col-md-6 col-xl-4">
+            <article class="project-card project-card-premium h-100">
+              <a href="{{ project.get_absolute_url }}" class="project-image" aria-label="View case study: {{ project.title }}">
+                {% if project.image %}
+                  <img src="{{ project.image.url }}" alt="{{ project.title }}" loading="lazy" />
+                {% else %}
+                  <div class="project-placeholder"><i class="bi bi-window-stack"></i><span>CASE STUDY</span></div>
+                {% endif %}
+                {% if project.featured %}<span class="featured-label"><i class="bi bi-stars"></i> Featured</span>{% endif %}
+                <span class="project-arrow"><i class="bi bi-arrow-up-right"></i></span>
+              </a>
+              <div class="project-info">
+                <div class="project-meta-line"><span class="project-category">{{ project.category|default:'Digital solution' }}</span><span class="project-index">{{ forloop.counter|stringformat:'02d' }}</span></div>
+                <h3><a href="{{ project.get_absolute_url }}">{{ project.title }}</a></h3>
+                <p>{{ project.summary|truncatechars:145 }}</p>
+                {% if project.technologies %}<div class="project-tech-preview">{{ project.technologies|truncatechars:75 }}</div>{% endif %}
+                <a href="{{ project.get_absolute_url }}" class="project-read-more">Explore case study <i class="bi bi-arrow-right"></i></a>
+              </div>
+            </article>
+          </div>
+        {% empty %}
+          <div class="col-12"><div class="empty-state portfolio-empty"><span class="empty-icon"><i class="bi bi-folder2-open"></i></span><h3>{% if selected_category %}No projects in this category yet{% else %}Our next case study is on the way{% endif %}</h3><p>{% if selected_category %}Try another category or view the full portfolio.{% else %}We’re preparing more examples of our work. In the meantime, tell us what you’re planning to build.{% endif %}</p><div class="empty-actions">{% if selected_category %}<a href="{% url 'portfolio:list' %}" class="btn btn-outline-primary rounded-pill">View all projects</a>{% endif %}<a href="{% url 'contact:contact' %}" class="btn btn-primary rounded-pill">Discuss a project <i class="bi bi-arrow-up-right ms-1"></i></a></div></div></div>
+        {% endfor %}
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 {% endblock %}

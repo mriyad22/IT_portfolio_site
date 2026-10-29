@@ -38,6 +38,11 @@ class ProjectModel(models.Model):
             self.slug = candidate
         super().save(*args, **kwargs)
 
+    @property
+    def technology_list(self):
+        """Return the comma-separated technology field as clean labels."""
+        return [item.strip() for item in self.technologies.split(",") if item.strip()]
+
     def get_absolute_url(self):
         return reverse("portfolio:detail", kwargs={"slug": self.slug})
 

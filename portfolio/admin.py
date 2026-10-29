@@ -1,5 +1,14 @@
 from django.contrib import admin
-from .models import ProjectModel
+
+from .models import ProjectCatgoryModel, ProjectModel
+
+
+@admin.register(ProjectCatgoryModel)
+class ProjectCategoryAdmin(admin.ModelAdmin):
+    list_display = ("name",)
+    search_fields = ("name",)
+    ordering = ("name",)
+
 
 @admin.register(ProjectModel)
 class ProjectAdmin(admin.ModelAdmin):

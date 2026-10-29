@@ -1,17 +1,7 @@
 {% extends 'master/base.html' %}
-{% block title %}
-  {{ post.title }} | {{ SITE_NAME }}
-{% endblock %}
+{% block title %}{{ post.title }} | Insights | {{ SITE_NAME }}{% endblock %}
+{% block meta_description %}{{ post.excerpt|default:post.title }}{% endblock %}
 {% block content %}
-  {% include 'partials/page_header.html' with heading=post.title eyebrow='INSIGHTS' subheading=post.excerpt %}
-  <section class="section-padding">
-    <div class="container">
-      <article class="article-content mx-auto">
-        {% if post.cover_image %}
-          <img class="detail-cover mb-4" src="{{ post.cover_image.url }}" alt="{{ post.title }}" />
-        {% endif %}
-        <div class="article-meta">{{ post.published_at|date:'F d, Y'|default:post.created_at|date:'F d, Y' }} · By {{ post.author_name }}</div>{{ post.body|linebreaks }}<hr class="my-5" /><a href="{% url 'blog:list' %}" class="text-link"><i class="bi bi-arrow-left"></i> Back to insights</a>
-      </article>
-    </div>
-  </section>
+  <section class="article-hero"><div class="container"><nav class="case-breadcrumb" aria-label="Breadcrumb"><a href="{% url 'core:home' %}">Home</a><i class="bi bi-chevron-right"></i><a href="{% url 'blog:list' %}">Insights</a><i class="bi bi-chevron-right"></i><span>Article</span></nav><div class="article-hero-copy"><span class="section-kicker"><i class="bi bi-journal-richtext"></i> INSIGHTS & IDEAS</span><h1>{{ post.title }}</h1>{% if post.excerpt %}<p class="case-lead">{{ post.excerpt }}</p>{% endif %}<div class="article-author-line"><span class="article-author-avatar"><i class="bi bi-person"></i></span><span><strong>{{ post.author_name }}</strong><small>Author</small></span><span class="article-meta-divider"></span><span class="article-date"><i class="bi bi-calendar3"></i> {{ post.published_at|date:'F d, Y'|default:post.created_at|date:'F d, Y' }}</span></div></div></div></section>
+  <section class="section-padding article-detail-section"><div class="container"><div class="article-layout"><article class="article-content article-reading-column">{% if post.cover_image %}<figure class="article-cover-frame"><img class="detail-cover article-cover" src="{{ post.cover_image.url }}" alt="{{ post.title }}" fetchpriority="high" /><figcaption>{{ post.title }}</figcaption></figure>{% endif %}<div class="article-body">{{ post.body|linebreaks }}</div><div class="article-end-card"><span class="case-next-icon"><i class="bi bi-chat-square-text"></i></span><div><span class="section-kicker">KEEP THE CONVERSATION GOING</span><h2>Have a question about this topic?</h2><p>Talk with our team about your technology or digital project needs.</p><a href="{% url 'contact:contact' %}" class="project-read-more">Contact our team <i class="bi bi-arrow-up-right"></i></a></div></div><a href="{% url 'blog:list' %}" class="article-back-link"><i class="bi bi-arrow-left"></i> Back to all insights</a></article><aside class="article-sidebar"><div class="article-sidebar-card"><span class="section-kicker">FROM OUR TEAM</span><h3>Practical ideas. Better decisions.</h3><p>Explore more perspectives on technology, security and digital experiences.</p><a href="{% url 'blog:list' %}" class="btn btn-primary rounded-pill w-100">More insights <i class="bi bi-arrow-right ms-1"></i></a></div><div class="article-sidebar-note"><i class="bi bi-shield-check"></i><p>Need tailored advice for your organisation? We’re happy to talk through your requirements.</p><a href="{% url 'contact:contact' %}">Let’s talk <i class="bi bi-arrow-up-right"></i></a></div></aside></div></div></section>
 {% endblock %}
