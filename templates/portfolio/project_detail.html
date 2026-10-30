@@ -26,7 +26,10 @@
   <section class="section-padding case-study-section">
     <div class="container">
       <div class="case-cover-wrap">
-        {% if project.image %}<img class="case-cover" src="{{ project.image.url }}" alt="{{ project.title }} project preview" fetchpriority="high" />{% else %}<div class="project-placeholder case-cover-placeholder"><i class="bi bi-window-stack"></i><span>PROJECT PREVIEW</span></div>{% endif %}
+        {% if project.image %}
+        <img class="case-cover" src="{{ project.image.url }}" alt="{{ project.title }} project preview" fetchpriority="high" />
+        {% else %}<div class="project-placeholder case-cover-placeholder"><i class="bi bi-window-stack"></i><span>PROJECT PREVIEW</span></div>
+        {% endif %}
         <div class="case-cover-caption"><span><i class="bi bi-check2-circle"></i> Selected work</span><span>Case study <i class="bi bi-arrow-down-right"></i></span></div>
       </div>
 

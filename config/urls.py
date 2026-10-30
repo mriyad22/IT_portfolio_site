@@ -19,8 +19,7 @@ urlpatterns = [
     path("404-preview/", TemplateView.as_view(template_name="404.html"), name="404_preview"),
 ]
 
-if settings.DEBUG:
-    urlpatterns+=re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
-    urlpatterns+=re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
+urlpatterns +=  re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
+urlpatterns +=  re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
 
 handler404 = "core.views.custom_404"
